@@ -31,7 +31,7 @@
     /* Mobile portrait adjustments */
     @media (max-width: 768px) and (orientation: portrait) {
       .image-wrapper img {
-        object-position: 50% 50%; /* center image for portrait */
+        object-position: 35% 50%; /* shift image slightly left to fit screen */
       }
     }
 
@@ -50,17 +50,17 @@
     <!-- Blog Link -->
     <a href="https://imanbenerrabeh.com" class="link"
        data-top="37" data-left="60" data-width="20" data-height="14"
-       data-mobile-top="5" data-mobile-left="55" data-mobile-width="40" data-mobile-height="25"></a>
+       data-mobile-top="0" data-mobile-left="50" data-mobile-width="50" data-mobile-height="50"></a>
 
     <!-- Portfolio Link -->
     <a href="https://26082002.com" class="link"
        data-top="54" data-left="28" data-width="24" data-height="14"
-       data-mobile-top="70" data-mobile-left="5" data-mobile-width="40" data-mobile-height="25"></a>
+       data-mobile-top="50" data-mobile-left="0" data-mobile-width="50" data-mobile-height="50"></a>
 
     <!-- YouTube Channel Link -->
     <a href="https://www.youtube.com/@imanbenerrabeh" class="link"
        data-top="30" data-left="33" data-width="28" data-height="14"
-       data-mobile-top="5" data-mobile-left="5" data-mobile-width="40" data-mobile-height="25"></a>
+       data-mobile-top="0" data-mobile-left="0" data-mobile-width="50" data-mobile-height="50"></a>
   </div>
 
   <script>
@@ -76,7 +76,7 @@
         let topPercent, leftPercent, widthPercent, heightPercent;
 
         if (isMobilePortrait) {
-          // Mobile portrait positions
+          // Mobile portrait full quadrant layout
           topPercent = parseFloat(link.dataset.mobileTop);
           leftPercent = parseFloat(link.dataset.mobileLeft);
           widthPercent = parseFloat(link.dataset.mobileWidth);

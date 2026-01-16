@@ -45,7 +45,11 @@
 </head>
 <body>
   <div class="image-wrapper">
-    <img src="imantopia.jpg" alt="Imantopia">
+    <!-- Use <picture> to load a different image on mobile portrait -->
+    <picture>
+      <source srcset="mobile-portrait.jpg" media="(max-width: 768px) and (orientation: portrait)">
+      <img src="imantopia.jpg" alt="Imantopia">
+    </picture>
 
     <!-- Blog Link -->
     <a href="https://imanbenerrabeh.com" class="link"

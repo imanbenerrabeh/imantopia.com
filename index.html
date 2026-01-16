@@ -27,11 +27,15 @@
       object-fit: cover;
       object-position: 30% 50%; /* desktop unchanged */
       display: block;
+      transition: object-position 0.3s, transform 0.3s;
     }
 
+    /* Mobile portrait adjustments */
     @media (max-width: 768px) and (orientation: portrait) {
       .image-wrapper img {
-        object-position: 5% 50%; /* mobile portrait shifted more left */
+        object-fit: contain;       /* fit the whole image in viewport */
+        object-position: 50% 50%; /* center vertically */
+        transform: translateX(-10%); /* shift slightly left */
       }
     }
 

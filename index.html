@@ -21,32 +21,18 @@
       overflow: hidden;
     }
 
-    /* Desktop image */
-    .image-wrapper img.desktop {
+    .image-wrapper img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      object-position: 30% 50%; /* desktop: lean left */
+      object-position: 30% 50%; /* desktop unchanged */
       display: block;
     }
 
-    /* Mobile portrait image */
+    /* Mobile portrait adjustments */
     @media (max-width: 768px) and (orientation: portrait) {
-      .image-wrapper img.desktop {
-        display: none; /* hide desktop image */
-      }
-
-      .image-wrapper img.mobile {
-        display: block;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;        /* fully fills screen */
-        object-position: 50% 50%; /* slightly adjust left/right if needed */
-      }
-
-      /* Make links bigger on mobile portrait */
-      .link {
-        transform: scale(1.5);  /* increase size 1.5x */
+      .image-wrapper img {
+        object-position: 50% 50%; /* center image for portrait */
       }
     }
 
@@ -54,29 +40,27 @@
       position: absolute;
       display: block;
       cursor: pointer;
-      z-index: 2; /* above image */
-      /* Optional: show clickable areas for testing */
-      /* background: rgba(255,0,0,0.2); */
     }
+
+    /* Optional: show clickable areas for testing */
+    /* .link { background: rgba(255,0,0,0.2); } */
   </style>
 </head>
 <body>
   <div class="image-wrapper">
-    <!-- Desktop Image -->
-    <img src="imantopia.jpg" alt="Imantopia" class="desktop">
+    <img src="imantopia.jpg" alt="Imantopia">
 
-    <!-- Mobile Portrait Image -->
-    <img src="mobile-portrait.jpg" alt="Imantopia Mobile" class="mobile" style="display:none;">
-
-    <!-- Links -->
+    <!-- Blog Link -->
     <a href="https://imanbenerrabeh.com" class="link"
-       data-top="37" data-left="60" data-width="20" data-height="14"></a>
+       data-top="37" data-left="60" data-width="24" data-height="16"></a>
 
+    <!-- Portfolio Link -->
     <a href="https://26082002.com" class="link"
-       data-top="54" data-left="28" data-width="24" data-height="14"></a>
+       data-top="54" data-left="28" data-width="28" data-height="16"></a>
 
+    <!-- YouTube Channel Link -->
     <a href="https://www.youtube.com/@imanbenerrabeh" class="link"
-       data-top="30" data-left="33" data-width="28" data-height="14"></a>
+       data-top="30" data-left="33" data-width="32" data-height="16"></a>
   </div>
 
   <script>
@@ -88,12 +72,17 @@
       const containerHeight = container.offsetHeight;
 
       links.forEach(link => {
-        const topPercent = parseFloat(link.dataset.top);
-        const leftPercent = parseFloat(link.dataset.left);
-        const widthPercent = parseFloat(link.dataset.width);
-        const heightPercent = parseFloat(link.dataset.height);
+        let topPercent = parseFloat(link.dataset.top);
+        let leftPercent = parseFloat(link.dataset.left);
+        let widthPercent = parseFloat(link.dataset.width);
+        let heightPercent = parseFloat(link.dataset.height);
 
-        // Links relative to container
+        // Slightly smaller on mobile for better fit
+        if (window.innerWidth <= 768 && window.innerHeight > window.innerWidth) {
+          widthPercent *= 0.9;
+          heightPercent *= 0.9;
+        }
+
         link.style.top = (containerHeight * topPercent / 100) + 'px';
         link.style.left = (containerWidth * leftPercent / 100) + 'px';
         link.style.width = (containerWidth * widthPercent / 100) + 'px';

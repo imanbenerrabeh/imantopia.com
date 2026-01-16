@@ -24,7 +24,7 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      object-position: 30% 50%; /* desktop unchanged */
+      object-position: 30% 50%; /* desktop */
       display: block;
     }
 
@@ -41,9 +41,6 @@
       cursor: pointer;
       touch-action: manipulation; /* ensures mobile taps work */
     }
-
-    /* Optional: show clickable areas for testing */
-    /* .link { background: rgba(255,0,0,0.2); } */
   </style>
 </head>
 <body>
@@ -52,15 +49,18 @@
 
     <!-- Blog Link -->
     <a href="https://imanbenerrabeh.com" class="link"
-       data-top="37" data-left="60" data-width="20" data-height="14"></a>
+       data-top="37" data-left="60" data-width="20" data-height="14"
+       data-mobile-top="5" data-mobile-left="55" data-mobile-width="40" data-mobile-height="25"></a>
 
     <!-- Portfolio Link -->
     <a href="https://26082002.com" class="link"
-       data-top="54" data-left="28" data-width="24" data-height="14"></a>
+       data-top="54" data-left="28" data-width="24" data-height="14"
+       data-mobile-top="70" data-mobile-left="5" data-mobile-width="40" data-mobile-height="25"></a>
 
     <!-- YouTube Channel Link -->
     <a href="https://www.youtube.com/@imanbenerrabeh" class="link"
-       data-top="30" data-left="33" data-width="28" data-height="14"></a>
+       data-top="30" data-left="33" data-width="28" data-height="14"
+       data-mobile-top="5" data-mobile-left="5" data-mobile-width="40" data-mobile-height="25"></a>
   </div>
 
   <script>
@@ -70,14 +70,25 @@
     function updateLinks() {
       const containerWidth = container.offsetWidth;
       const containerHeight = container.offsetHeight;
+      const isMobilePortrait = window.innerWidth <= 768 && window.innerHeight > window.innerWidth;
 
       links.forEach(link => {
-        const topPercent = parseFloat(link.dataset.top);
-        const leftPercent = parseFloat(link.dataset.left);
-        const widthPercent = parseFloat(link.dataset.width);
-        const heightPercent = parseFloat(link.dataset.height);
+        let topPercent, leftPercent, widthPercent, heightPercent;
 
-        // Always scale links 100% relative to container
+        if (isMobilePortrait) {
+          // Mobile portrait positions
+          topPercent = parseFloat(link.dataset.mobileTop);
+          leftPercent = parseFloat(link.dataset.mobileLeft);
+          widthPercent = parseFloat(link.dataset.mobileWidth);
+          heightPercent = parseFloat(link.dataset.mobileHeight);
+        } else {
+          // Desktop positions
+          topPercent = parseFloat(link.dataset.top);
+          leftPercent = parseFloat(link.dataset.left);
+          widthPercent = parseFloat(link.dataset.width);
+          heightPercent = parseFloat(link.dataset.height);
+        }
+
         link.style.top = (containerHeight * topPercent / 100) + 'px';
         link.style.left = (containerWidth * leftPercent / 100) + 'px';
         link.style.width = (containerWidth * widthPercent / 100) + 'px';

@@ -24,15 +24,14 @@
     .image-wrapper img {
       width: 100%;
       height: 100%;
-      object-fit: cover;        /* fills screen without black borders */
-      object-position: 30% 50%; /* desktop: lean left a bit */
+      object-fit: cover;
+      object-position: 30% 50%; /* desktop: lean left */
       display: block;
     }
 
-    /* Mobile portrait adjustments */
     @media (max-width: 768px) and (orientation: portrait) {
       .image-wrapper img {
-        object-position: 15% 50%; /* shift more left on mobile */
+        object-position: 70% 50%; /* shift image right on mobile */
       }
     }
 
@@ -68,17 +67,21 @@
     const img = document.querySelector('.image-wrapper img');
 
     function updateLinks() {
-      const imgRect = img.getBoundingClientRect();
+      const container = img.parentElement;
+      const containerWidth = container.offsetWidth;
+      const containerHeight = container.offsetHeight;
+
       links.forEach(link => {
         const topPercent = parseFloat(link.dataset.top);
         const leftPercent = parseFloat(link.dataset.left);
         const widthPercent = parseFloat(link.dataset.width);
         const heightPercent = parseFloat(link.dataset.height);
 
-        link.style.top = (imgRect.top + imgRect.height * (topPercent / 100)) + 'px';
-        link.style.left = (imgRect.left + imgRect.width * (leftPercent / 100)) + 'px';
-        link.style.width = (imgRect.width * (widthPercent / 100)) + 'px';
-        link.style.height = (imgRect.height * (heightPercent / 100)) + 'px';
+        // Use container size to calculate absolute position
+        link.style.top = (containerHeight * topPercent / 100) + 'px';
+        link.style.left = (containerWidth * leftPercent / 100) + 'px';
+        link.style.width = (containerWidth * widthPercent / 100) + 'px';
+        link.style.height = (containerHeight * heightPercent / 100) + 'px';
       });
     }
 

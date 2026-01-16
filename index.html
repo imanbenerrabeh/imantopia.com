@@ -32,7 +32,7 @@
     /* Mobile portrait adjustments */
     @media (max-width: 768px) and (orientation: portrait) {
       .image-wrapper img {
-        object-position: 10% 50%; /* mobile: fully fit, slightly left */
+        object-position: 5% 50%; /* shift mobile image a bit left, fills screen */
       }
     }
 
@@ -78,6 +78,7 @@
         const widthPercent = parseFloat(link.dataset.width);
         const heightPercent = parseFloat(link.dataset.height);
 
+        // Links relative to container, not image
         link.style.top = (containerHeight * topPercent / 100) + 'px';
         link.style.left = (containerWidth * leftPercent / 100) + 'px';
         link.style.width = (containerWidth * widthPercent / 100) + 'px';

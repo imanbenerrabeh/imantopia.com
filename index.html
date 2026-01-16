@@ -21,8 +21,8 @@
       overflow: hidden;
     }
 
-    /* Default desktop image */
-    .image-wrapper img {
+    /* Desktop image */
+    .image-wrapper img.desktop {
       width: 100%;
       height: 100%;
       object-fit: cover;
@@ -32,10 +32,21 @@
 
     /* Mobile portrait image */
     @media (max-width: 768px) and (orientation: portrait) {
-      .image-wrapper img {
-        content: url('mobile-portrait.jpg'); /* replace with your mobile image file */
-        object-fit: contain;                /* fully fits mobile screen */
-        object-position: 50% 50%;           /* centered vertically and horizontally */
+      .image-wrapper img.desktop {
+        display: none; /* hide desktop image */
+      }
+
+      .image-wrapper img.mobile {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;        /* fully fills screen */
+        object-position: 50% 50%; /* slightly adjust left/right if needed */
+      }
+
+      /* Make links bigger on mobile portrait */
+      .link {
+        transform: scale(1.5);  /* increase size 1.5x */
       }
     }
 
@@ -43,26 +54,27 @@
       position: absolute;
       display: block;
       cursor: pointer;
-      z-index: 2; /* ensure links are above image */
+      z-index: 2; /* above image */
+      /* Optional: show clickable areas for testing */
+      /* background: rgba(255,0,0,0.2); */
     }
-
-    /* Optional: show clickable areas for testing */
-    /* .link { background: rgba(255,0,0,0.2); } */
   </style>
 </head>
 <body>
   <div class="image-wrapper">
-    <img src="imantopia.jpg" alt="Imantopia">
+    <!-- Desktop Image -->
+    <img src="imantopia.jpg" alt="Imantopia" class="desktop">
 
-    <!-- Blog Link -->
+    <!-- Mobile Portrait Image -->
+    <img src="mobile-portrait.jpg" alt="Imantopia Mobile" class="mobile" style="display:none;">
+
+    <!-- Links -->
     <a href="https://imanbenerrabeh.com" class="link"
        data-top="37" data-left="60" data-width="20" data-height="14"></a>
 
-    <!-- Portfolio Link -->
     <a href="https://26082002.com" class="link"
        data-top="54" data-left="28" data-width="24" data-height="14"></a>
 
-    <!-- YouTube Channel Link -->
     <a href="https://www.youtube.com/@imanbenerrabeh" class="link"
        data-top="30" data-left="33" data-width="28" data-height="14"></a>
   </div>
@@ -81,7 +93,7 @@
         const widthPercent = parseFloat(link.dataset.width);
         const heightPercent = parseFloat(link.dataset.height);
 
-        // Links relative to container, works in both desktop and portrait mobile
+        // Links relative to container
         link.style.top = (containerHeight * topPercent / 100) + 'px';
         link.style.left = (containerWidth * leftPercent / 100) + 'px';
         link.style.width = (containerWidth * widthPercent / 100) + 'px';

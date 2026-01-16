@@ -24,14 +24,14 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      object-position: 30% 50%; /* desktop */
+      object-position: 30% 50%; /* desktop unchanged */
       display: block;
     }
 
     /* Mobile portrait adjustments */
     @media (max-width: 768px) and (orientation: portrait) {
       .image-wrapper img {
-        object-position: 50% 50%; /* center for portrait */
+        object-position: 50% 50%; /* center image for portrait */
       }
     }
 
@@ -39,7 +39,7 @@
       position: absolute;
       display: block;
       cursor: pointer;
-      touch-action: manipulation; /* ensures taps work on mobile */
+      touch-action: manipulation; /* ensures mobile taps work */
     }
 
     /* Optional: show clickable areas for testing */
@@ -52,12 +52,41 @@
 
     <!-- Blog Link -->
     <a href="https://imanbenerrabeh.com" class="link"
-       data-top="37" data-left="60" data-width="24" data-height="16"></a>
+       data-top="37" data-left="60" data-width="20" data-height="14"></a>
 
     <!-- Portfolio Link -->
     <a href="https://26082002.com" class="link"
-       data-top="54" data-left="28" data-width="28" data-height="16"></a>
+       data-top="54" data-left="28" data-width="24" data-height="14"></a>
 
     <!-- YouTube Channel Link -->
     <a href="https://www.youtube.com/@imanbenerrabeh" class="link"
-       data-top="30" data-left="33" data-width="32" data
+       data-top="30" data-left="33" data-width="28" data-height="14"></a>
+  </div>
+
+  <script>
+    const links = document.querySelectorAll('.link');
+    const container = document.querySelector('.image-wrapper');
+
+    function updateLinks() {
+      const containerWidth = container.offsetWidth;
+      const containerHeight = container.offsetHeight;
+
+      links.forEach(link => {
+        const topPercent = parseFloat(link.dataset.top);
+        const leftPercent = parseFloat(link.dataset.left);
+        const widthPercent = parseFloat(link.dataset.width);
+        const heightPercent = parseFloat(link.dataset.height);
+
+        // Always scale links 100% relative to container
+        link.style.top = (containerHeight * topPercent / 100) + 'px';
+        link.style.left = (containerWidth * leftPercent / 100) + 'px';
+        link.style.width = (containerWidth * widthPercent / 100) + 'px';
+        link.style.height = (containerHeight * heightPercent / 100) + 'px';
+      });
+    }
+
+    window.addEventListener('resize', updateLinks);
+    window.addEventListener('load', updateLinks);
+  </script>
+</body>
+</html>

@@ -11,34 +11,38 @@
       width: 100%;
       height: 100%;
       overflow: hidden;
+      background: #000; /* fallback background */
     }
 
-    .container {
+    /* This keeps the image's aspect ratio and lets it fill screen */
+    .image-wrapper {
       position: relative;
       width: 100vw;
       height: 100vh;
+      overflow: hidden;
     }
 
-    .container img {
+    .image-wrapper img {
       width: 100%;
       height: 100%;
-      object-fit: cover; /* fills screen, may crop edges */
+      object-fit: cover;        /* fills screen without black borders */
+      object-position: 30% 50%; /* lean image left */
       display: block;
     }
 
+    /* Clickable links positioned relative to the image wrapper */
     .link {
       position: absolute;
       display: block;
       cursor: pointer;
     }
 
-    /* Optional: make clickable areas easier to see in dev */
+    /* Optional: for testing clickable areas */
     /* .link { background: rgba(255,0,0,0.2); } */
   </style>
 </head>
 <body>
-  <div class="container">
-    <!-- Main Image -->
+  <div class="image-wrapper">
     <img src="imantopia.jpg" alt="Imantopia">
 
     <!-- Blog Link -->
@@ -56,5 +60,31 @@
        style="top: 30%; left: 33%; width: 28%; height: 14%;">
     </a>
   </div>
+
+  <script>
+    // Adjust links dynamically if the image crops
+    const links = document.querySelectorAll('.link');
+    const img = document.querySelector('.image-wrapper img');
+
+    function updateLinks() {
+      const imgRect = img.getBoundingClientRect();
+      links.forEach(link => {
+        // original percentages
+        const topPercent = parseFloat(link.style.top);
+        const leftPercent = parseFloat(link.style.left);
+        const widthPercent = parseFloat(link.style.width);
+        const heightPercent = parseFloat(link.style.height);
+
+        // compute actual pixel positions
+        link.style.top = (imgRect.top + imgRect.height * (topPercent/100)) + 'px';
+        link.style.left = (imgRect.left + imgRect.width * (leftPercent/100)) + 'px';
+        link.style.width = (imgRect.width * (widthPercent/100)) + 'px';
+        link.style.height = (imgRect.height * (heightPercent/100)) + 'px';
+      });
+    }
+
+    window.addEventListener('resize', updateLinks);
+    window.addEventListener('load', updateLinks);
+  </script>
 </body>
 </html>

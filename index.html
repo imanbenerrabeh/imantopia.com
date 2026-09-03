@@ -25,108 +25,22 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      object-position: 30% 50%;
+      object-position: 30% 50%; /* desktop */
       display: block;
     }
 
-    /* All navigation text */
-    .text-link {
-      position: absolute;
-      z-index: 10;
-
-      color: white;
-      text-decoration: none;
-
-      font-family: Arial, sans-serif;
-      font-size: 16px;
-      font-weight: normal;
-
-      cursor: pointer;
-    }
-
-    .text-link:hover {
-      text-decoration: underline;
-    }
-
-    /* LEFT */
-
-    .manuscript-link {
-      top: 20%;
-      left: 16%;
-    }
-
-    .portfolio-link {
-      top: 50%;
-      left: 16%;
-    }
-
-    .newsletter-link {
-      top: 80%;
-      left: 16%;
-    }
-
-    /* RIGHT */
-
-    .bio-link {
-      top: 20%;
-      right: 16%;
-    }
-
-    .blog-link {
-      top: 50%;
-      right: 16%;
-    }
-
-    .channel-link {
-      top: 80%;
-      right: 16%;
-    }
-
-    /* Mobile portrait */
-
+    /* Mobile portrait adjustments */
     @media (max-width: 768px) and (orientation: portrait) {
-
       .image-wrapper img {
-        object-position: 35% 50%;
+        object-position: 35% 50%; /* shift image slightly left to fit screen */
       }
+    }
 
-      .text-link {
-        font-size: 14px;
-      }
-
-      /* LEFT */
-
-      .manuscript-link {
-        top: 20%;
-        left: 10%;
-      }
-
-      .portfolio-link {
-        top: 50%;
-        left: 10%;
-      }
-
-      .newsletter-link {
-        top: 80%;
-        left: 10%;
-      }
-
-      /* RIGHT */
-
-      .bio-link {
-        top: 20%;
-        right: 10%;
-      }
-
-      .blog-link {
-        top: 50%;
-        right: 10%;
-      }
-
-      .channel-link {
-        top: 80%;
-        right: 10%;
-      }
+    .link {
+      position: absolute;
+      display: block;
+      cursor: pointer;
+      touch-action: manipulation; /* ensures mobile taps work */
     }
   </style>
 </head>
@@ -135,37 +49,107 @@
 
   <div class="image-wrapper">
 
-    <img src="imantopia.jpg" alt="Imantopia">
+    <!-- Use <picture> to load a different image on mobile portrait -->
+    <picture>
+      <source
+        srcset="mobile-portrait.jpg"
+        media="(max-width: 768px) and (orientation: portrait)"
+      >
+      <img src="imantopia.jpg" alt="Imantopia">
+    </picture>
 
-    <!-- LEFT -->
 
-    <a href="/manuscript" class="text-link manuscript-link">
-      MANUSCRIPT
-    </a>
+    <!-- MANUSCRIPT — Left Top -->
+    <a href="/manuscript" class="link"
+       data-top="0" data-left="0" data-width="50" data-height="33.33"
+       data-mobile-top="0" data-mobile-left="0" data-mobile-width="50" data-mobile-height="33.33"></a>
 
-    <a href="/portfolio" class="text-link portfolio-link">
-      PORTFOLIO
-    </a>
 
-    <a href="/newsletter" class="text-link newsletter-link">
-      NEWSLETTER
-    </a>
+    <!-- BIO — Right Top -->
+    <a href="/bio" class="link"
+       data-top="0" data-left="50" data-width="50" data-height="33.33"
+       data-mobile-top="0" data-mobile-left="50" data-mobile-width="50" data-mobile-height="33.33"></a>
 
-    <!-- RIGHT -->
 
-    <a href="/bio" class="text-link bio-link">
-      BIO
-    </a>
+    <!-- PORTFOLIO — Left Middle -->
+    <a href="/portfolio" class="link"
+       data-top="33.33" data-left="0" data-width="50" data-height="33.33"
+       data-mobile-top="33.33" data-mobile-left="0" data-mobile-width="50" data-mobile-height="33.33"></a>
 
-    <a href="/blog" class="text-link blog-link">
-      BLOG
-    </a>
 
-    <a href="/channel" class="text-link channel-link">
-      CHANNEL
-    </a>
+    <!-- BLOG — Right Middle -->
+    <a href="https://imanbenerrabeh.com" class="link"
+       data-top="33.33" data-left="50" data-width="50" data-height="33.33"
+       data-mobile-top="33.33" data-mobile-left="50" data-mobile-width="50" data-mobile-height="33.33"></a>
+
+
+    <!-- NEWSLETTER — Left Bottom -->
+    <a href="https://buttondown.com/imanbenerrabeh" class="link"
+       data-top="66.66" data-left="0" data-width="50" data-height="33.34"
+       data-mobile-top="66.66" data-mobile-left="0" data-mobile-width="50" data-mobile-height="33.34"></a>
+
+
+    <!-- CHANNEL — Right Bottom -->
+    <a href="https://www.youtube.com/@imanbenerrabeh" class="link"
+       data-top="66.66" data-left="50" data-width="50" data-height="33.34"
+       data-mobile-top="66.66" data-mobile-left="50" data-mobile-width="50" data-mobile-height="33.34"></a>
 
   </div>
+
+
+  <script>
+    const links = document.querySelectorAll('.link');
+    const container = document.querySelector('.image-wrapper');
+
+    function updateLinks() {
+      const containerWidth = container.offsetWidth;
+      const containerHeight = container.offsetHeight;
+
+      const isMobilePortrait =
+        window.innerWidth <= 768 &&
+        window.innerHeight > window.innerWidth;
+
+      links.forEach(link => {
+
+        let topPercent;
+        let leftPercent;
+        let widthPercent;
+        let heightPercent;
+
+        if (isMobilePortrait) {
+
+          topPercent = parseFloat(link.dataset.mobileTop);
+          leftPercent = parseFloat(link.dataset.mobileLeft);
+          widthPercent = parseFloat(link.dataset.mobileWidth);
+          heightPercent = parseFloat(link.dataset.mobileHeight);
+
+        } else {
+
+          topPercent = parseFloat(link.dataset.top);
+          leftPercent = parseFloat(link.dataset.left);
+          widthPercent = parseFloat(link.dataset.width);
+          heightPercent = parseFloat(link.dataset.height);
+
+        }
+
+        link.style.top =
+          (containerHeight * topPercent / 100) + 'px';
+
+        link.style.left =
+          (containerWidth * leftPercent / 100) + 'px';
+
+        link.style.width =
+          (containerWidth * widthPercent / 100) + 'px';
+
+        link.style.height =
+          (containerHeight * heightPercent / 100) + 'px';
+
+      });
+    }
+
+    window.addEventListener('resize', updateLinks);
+    window.addEventListener('load', updateLinks);
+  </script>
 
 </body>
 </html>

@@ -1,0 +1,144 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="utf-8">
+
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>iman ben errabeh — manuscript</title>
+
+<style>
+
+html, body { height:100%; }
+
+body {
+  margin:0;
+  padding:40px;
+  font-family:"Times New Roman", Times, serif;
+  font-size:12pt;
+  line-height:1.5;
+  color:#000;
+  background:#fff;
+  display:flex;
+  flex-direction:column;
+}
+
+.container {
+  max-width:760px;
+  margin:0 auto;
+  flex:1;
+}
+
+header {
+  text-align:center;
+  margin-top:40px;
+}
+
+h1 {
+  margin:0;
+  font-size:1.6em;
+  font-weight:normal;
+}
+
+.subtitle {
+  margin-top:8px;
+  font-size:1em;
+}
+
+main {
+  margin-top:40px;
+}
+
+.entry {
+  margin-top:40px;
+  white-space:pre-wrap;
+}
+
+.entry-header {
+  margin-bottom:16px;
+}
+
+.date {
+  font-size:11pt;
+}
+
+.title {
+  font-size:12pt;
+}
+
+.copyright {
+  text-align:center;
+  font-size:11pt;
+  padding:20px 0;
+}
+
+@media print {
+
+  body {
+    padding:20px;
+  }
+
+  .entry {
+    page-break-inside:avoid;
+  }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<header>
+
+  <h1>iman ben errabeh</h1>
+
+  <div class="subtitle">manuscript / writing sessions / wip</div>
+
+</header>
+
+<main id="entries">
+
+<div class="entry">
+
+<div class="entry-header">
+<div class="date">Stockholm · 03.09.26</div>
+<div class="title">chapter 01 — opening</div>
+</div>
+
+Write your first manuscript entry here.
+
+This is where the writing from Scrivener will eventually appear.
+
+</div>
+
+<div class="entry">
+
+<div class="entry-header">
+<div class="date">Stockholm · 02.09.26</div>
+<div class="title">notes — beginning</div>
+</div>
+
+Your next writing session will eventually appear here.
+
+</div>
+
+</main>
+
+</div>
+
+<div class="copyright">
+
+© 2026 Iman Ben Errabeh. All rights reserved.
+
+</div>
+
+</body>
+
+</html>

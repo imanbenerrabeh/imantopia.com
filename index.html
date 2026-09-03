@@ -32,7 +32,7 @@
     /* Mobile portrait adjustments */
     @media (max-width: 768px) and (orientation: portrait) {
       .image-wrapper img {
-        object-position: 35% 50%; /* shift image slightly left to fit screen */
+        object-position: 35% 50%;
       }
     }
 
@@ -40,7 +40,7 @@
       position: absolute;
       display: block;
       cursor: pointer;
-      touch-action: manipulation; /* ensures mobile taps work */
+      touch-action: manipulation;
     }
   </style>
 </head>
@@ -111,10 +111,7 @@
 
       links.forEach(link => {
 
-        let topPercent;
-        let leftPercent;
-        let widthPercent;
-        let heightPercent;
+        let topPercent, leftPercent, widthPercent, heightPercent;
 
         if (isMobilePortrait) {
 

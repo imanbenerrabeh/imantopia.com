@@ -2,10 +2,15 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+  >
+
   <title>Imantopia</title>
 
   <style>
+
     html,
     body {
       margin: 0;
@@ -16,21 +21,18 @@
       background: #000;
     }
 
-    /* =========================
-       DESKTOP
-       3:2 image canvas
-       ========================= */
+    body {
+      position: fixed;
+      inset: 0;
+    }
 
     .image-wrapper {
       position: fixed;
+      inset: 0;
 
-      width: min(100vw, calc(100vh * 1.5));
-      height: min(100vh, calc(100vw / 1.5));
-
-      top: 50%;
-      left: 50%;
-
-      transform: translate(-50%, -50%);
+      width: 100vw;
+      height: 100vh;
+      height: 100dvh;
 
       overflow: hidden;
       background: #000;
@@ -40,7 +42,9 @@
       width: 100%;
       height: 100%;
 
-      object-fit: fill;
+      object-fit: cover;
+      object-position: 30% 50%;
+
       display: block;
     }
 
@@ -53,11 +57,7 @@
 
       .image-wrapper {
         position: fixed;
-
-        top: 0;
-        left: 0;
-
-        transform: none;
+        inset: 0;
 
         width: 100vw;
         height: 100vh;
@@ -75,6 +75,7 @@
 
         display: block;
       }
+
     }
 
 
@@ -84,9 +85,11 @@
 
     .link {
       position: absolute;
+
       display: block;
 
       cursor: pointer;
+
       touch-action: manipulation;
 
       -webkit-tap-highlight-color: transparent;
@@ -124,11 +127,11 @@
 
 
     <!-- =========================
-         MANUSCRIPT — LEFT TOP
+         PORTFOLIO — LEFT TOP
          ========================= -->
 
     <a
-      href="/manuscript"
+      href="/portfolio"
       class="link"
 
       data-top="0"
@@ -164,11 +167,11 @@
 
 
     <!-- =========================
-         PORTFOLIO — LEFT MIDDLE
+         MANUSCRIPT — LEFT MIDDLE
          ========================= -->
 
     <a
-      href="/portfolio"
+      href="/manuscript"
       class="link"
 
       data-top="33.33"
@@ -253,8 +256,11 @@
 
     function updateLinks() {
 
-      const containerWidth = container.offsetWidth;
-      const containerHeight = container.offsetHeight;
+      const containerWidth =
+        container.offsetWidth;
+
+      const containerHeight =
+        container.offsetHeight;
 
 
       const isMobilePortrait =
@@ -297,6 +303,7 @@
 
           heightPercent =
             parseFloat(link.dataset.height);
+
         }
 
 
@@ -320,9 +327,15 @@
     }
 
 
-    window.addEventListener('load', updateLinks);
+    window.addEventListener(
+      'load',
+      updateLinks
+    );
 
-    window.addEventListener('resize', updateLinks);
+    window.addEventListener(
+      'resize',
+      updateLinks
+    );
 
     window.addEventListener(
       'orientationchange',

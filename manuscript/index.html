@@ -1,160 +1,87 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 
-  <title>iman ben errabeh — manuscript</title>
+<title>imantopia — wip manuscript</title>
 
-  <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      background: #fff;
-      color: #000;
-    }
+<style>
+html, body {
+  height: 100%;
+}
 
-    body {
-      font-family: "Times New Roman", Times, serif;
-      font-size: 12pt;
-      line-height: 1.5;
-    }
+body {
+  margin: 0;
+  padding: 40px;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 12pt;
+  line-height: 1.5;
+  color: #000;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+}
 
-    .container {
-      max-width: 760px;
-      margin: 0 auto;
-      padding: 60px 30px;
-    }
+.container {
+  max-width: 760px;
+  margin: 0 auto;
+  flex: 1;
+}
 
-    header {
-      text-align: center;
-      margin-bottom: 80px;
-    }
+header {
+  text-align: center;
+  margin-top: 40px;
+}
 
-    h1 {
-      margin: 0;
-      font-size: 20px;
-      font-weight: normal;
-    }
+h1 {
+  margin: 0;
+  font-size: 1.6em;
+  font-weight: normal;
+}
 
-    .subtitle {
-      margin-top: 8px;
-      font-size: 12pt;
-    }
+.subtitle {
+  margin-top: 8px;
+  font-size: 1em;
+}
 
-    .entry {
-      margin-bottom: 90px;
-    }
+main {
+  margin-top: 40px;
+}
 
-    .entry-header {
-      margin-bottom: 25px;
-    }
+.entry {
+  margin-top: 40px;
+  white-space: pre-wrap;
+}
 
-    .date {
-      font-size: 11pt;
-    }
-
-    .title {
-      margin-top: 4px;
-      font-size: 12pt;
-    }
-
-    .location {
-      font-style: italic;
-    }
-
-    .writing {
-      white-space: pre-wrap;
-    }
-
-    .word-count {
-      margin-top: 25px;
-      font-size: 10pt;
-    }
-
-    footer {
-      text-align: center;
-      margin-top: 100px;
-      font-size: 10pt;
-    }
-
-    @media print {
-      .container {
-        max-width: none;
-        padding: 20px;
-      }
-
-      header {
-        margin-bottom: 50px;
-      }
-
-      .entry {
-        page-break-inside: auto;
-      }
-
-      footer {
-        display: none;
-      }
-    }
-  </style>
+.copyright {
+  text-align: center;
+  font-size: 11pt;
+  padding: 20px 0;
+}
+</style>
 </head>
 
 <body>
 
-  <div class="container">
+<div class="container">
 
-    <header>
-      <h1>iman ben errabeh</h1>
-      <div class="subtitle">manuscript / wip</div>
-    </header>
+<header>
+  <h1>imantopia</h1>
+  <div class="subtitle">wip manuscript</div>
+</header>
 
-    <main>
+<main id="entries">
 
-      <article class="entry">
+  <!-- Manuscript entries will appear here automatically. -->
 
-        <div class="entry-header">
-          <div class="date">03 September 2026 · 21:42</div>
-          <div class="location">Stockholm</div>
-          <div class="title">chapter 01 — opening</div>
-        </div>
+</main>
 
-        <div class="writing">This is where the first writing session will appear.
+</div>
 
-Write your novel in Scrivener. Copy and paste the session here for now.
-
-The automated system will eventually create entries in exactly this format.</div>
-
-        <div class="word-count">
-          1,284 words
-        </div>
-
-      </article>
-
-      <article class="entry">
-
-        <div class="entry-header">
-          <div class="date">02 September 2026 · 18:17</div>
-          <div class="location">Stockholm</div>
-          <div class="title">notes — beginning</div>
-        </div>
-
-        <div class="writing">Your previous writing session would appear here.
-
-Entries will eventually be added automatically from your emails.</div>
-
-        <div class="word-count">
-          743 words
-        </div>
-
-      </article>
-
-    </main>
-
-    <footer>
-      © 2026 Iman Ben Errabeh
-    </footer>
-
-  </div>
+<div class="copyright">
+© 2026 Iman Ben Errabeh. All rights reserved.
+</div>
 
 </body>
 </html>

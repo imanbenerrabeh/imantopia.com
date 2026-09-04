@@ -262,57 +262,74 @@ const desktopHotspots = {
 /*
 ====================================================
 MOBILE HOTSPOTS
+====================================================
 
-These are kept separately because the mobile
-image is a different photograph/composition.
+These coordinates are calibrated specifically to
+mobile-portrait.jpg.
 
-You can adjust these independently later without
-affecting the desktop version.
+Unlike the previous version, these are NOT six
+screen quadrants.
+
+Each hotspot is positioned over the actual
+handwritten word in the mobile photograph.
+
+Approximate handwritten positions in the supplied
+mobile photograph:
+
+portfolio  -> upper-left
+bio        -> upper-right
+manuscript -> middle-left
+blog       -> middle-right
+newsletter -> lower-left
+channel    -> lower-right
+
+Coordinates are percentages of the ORIGINAL
+mobile image, not percentages of the screen.
 ====================================================
 */
 
 const mobileHotspots = {
 
   portfolio: {
-    x: 20,
-    y: 20,
-    w: 25,
-    h: 8
+    x: 26.8,
+    y: 32.9,
+    w: 10.0,
+    h: 3.8
   },
 
   bio: {
-    x: 55,
-    y: 20,
-    w: 25,
-    h: 8
+    x: 46.0,
+    y: 34.2,
+    w: 6.0,
+    h: 3.8
   },
 
   manuscript: {
-    x: 15,
-    y: 40,
-    w: 30,
-    h: 8
+    x: 17.4,
+    y: 37.7,
+    w: 11.5,
+    h: 3.8
   },
 
   blog: {
-    x: 55,
-    y: 40,
-    w: 25,
-    h: 8
+    x: 53.6,
+    y: 38.6,
+    w: 7.0,
+    h: 3.8
   },
 
   newsletter: {
-    x: 15,
-    y: 60,
-    w: 30,
-    h: 8
+    x: 25.5,
+    y: 43.3,
+    w: 11.0,
+    h: 3.8
   },
 
   channel: {
-    x: 55,
-    y: 60,
-    w: 25,
-    h: 8
+    x: 44.3,
+    y: 43.3,
+    w: 8.5,
+    h: 3.8
   }
 
 };
@@ -341,9 +358,80 @@ function positionHotspots() {
   -----------------------------------------------
   MOBILE
   -----------------------------------------------
+
+  The mobile photograph is a different image.
+
+  Calculate exactly where that image is displayed
+  after object-fit: cover and object-position: 35% 50%.
+
+  This keeps every clickable area attached to
+  the actual handwriting.
+  -----------------------------------------------
   */
 
   if (isMobile) {
+
+    const imageNaturalWidth =
+      image.naturalWidth;
+
+    const imageNaturalHeight =
+      image.naturalHeight;
+
+    const wrapperWidth =
+      wrapper.clientWidth;
+
+    const wrapperHeight =
+      wrapper.clientHeight;
+
+
+    /*
+    -----------------------------------------------
+    Scale required for object-fit: cover
+    -----------------------------------------------
+    */
+
+    const scale =
+      Math.max(
+        wrapperWidth / imageNaturalWidth,
+        wrapperHeight / imageNaturalHeight
+      );
+
+
+    const displayedWidth =
+      imageNaturalWidth * scale;
+
+    const displayedHeight =
+      imageNaturalHeight * scale;
+
+
+    /*
+    -----------------------------------------------
+    object-position: 35% 50%
+
+    Calculate the amount of crop.
+    -----------------------------------------------
+    */
+
+    const horizontalOverflow =
+      displayedWidth - wrapperWidth;
+
+    const verticalOverflow =
+      displayedHeight - wrapperHeight;
+
+
+    const imageLeft =
+      -horizontalOverflow * 0.35;
+
+    const imageTop =
+      -verticalOverflow * 0.50;
+
+
+    /*
+    -----------------------------------------------
+    Convert ORIGINAL MOBILE IMAGE coordinates
+    into actual screen coordinates.
+    -----------------------------------------------
+    */
 
     Object.keys(mobileHotspots).forEach(id => {
 
@@ -353,17 +441,35 @@ function positionHotspots() {
       const link =
         document.getElementById(id);
 
+
+      const originalX =
+        imageNaturalWidth *
+        hotspot.x / 100;
+
+      const originalY =
+        imageNaturalHeight *
+        hotspot.y / 100;
+
+      const originalWidth =
+        imageNaturalWidth *
+        hotspot.w / 100;
+
+      const originalHeight =
+        imageNaturalHeight *
+        hotspot.h / 100;
+
+
       link.style.left =
-        hotspot.x + '%';
+        (imageLeft + originalX * scale) + 'px';
 
       link.style.top =
-        hotspot.y + '%';
+        (imageTop + originalY * scale) + 'px';
 
       link.style.width =
-        hotspot.w + '%';
+        (originalWidth * scale) + 'px';
 
       link.style.height =
-        hotspot.h + '%';
+        (originalHeight * scale) + 'px';
 
     });
 

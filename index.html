@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
 
 <meta
@@ -16,9 +18,12 @@ html,
 body {
   margin: 0;
   padding: 0;
+
   width: 100%;
   height: 100%;
+
   overflow: hidden;
+
   background: #000;
 }
 
@@ -36,7 +41,10 @@ body {
   height: 100dvh;
 
   overflow: hidden;
+
   background: #000;
+
+  z-index: 0;
 }
 
 .image-wrapper img {
@@ -47,6 +55,9 @@ body {
   object-position: 30% 50%;
 
   display: block;
+
+  /* The image must never steal the tap from the links */
+  pointer-events: none;
 }
 
 
@@ -64,13 +75,15 @@ body {
   touch-action: manipulation;
 
   -webkit-tap-highlight-color: transparent;
-
-  /*
-    Invisible while keeping the clickable
-    areas easy to adjust.
-  */
+  -webkit-user-select: none;
+  user-select: none;
 
   background: transparent;
+
+  /* Keep links above the photograph */
+  z-index: 100;
+
+  pointer-events: auto;
 }
 
 
@@ -87,6 +100,7 @@ body {
 }
 
 </style>
+
 </head>
 
 
@@ -111,8 +125,6 @@ body {
 
   <!-- ==============================
        PORTFOLIO
-       handwritten word:
-       approximately x 38% / y 31%
        ============================== -->
 
   <a
@@ -124,8 +136,6 @@ body {
 
   <!-- ==============================
        BIO
-       handwritten word:
-       approximately x 55% / y 34%
        ============================== -->
 
   <a
@@ -137,8 +147,6 @@ body {
 
   <!-- ==============================
        MANUSCRIPT
-       handwritten word:
-       approximately x 29% / y 43%
        ============================== -->
 
   <a
@@ -150,8 +158,6 @@ body {
 
   <!-- ==============================
        BLOG
-       handwritten word:
-       approximately x 63% / y 45%
        ============================== -->
 
   <a
@@ -163,8 +169,6 @@ body {
 
   <!-- ==============================
        NEWSLETTER
-       handwritten word:
-       approximately x 37% / y 58%
        ============================== -->
 
   <a
@@ -176,8 +180,6 @@ body {
 
   <!-- ==============================
        CHANNEL
-       handwritten word:
-       approximately x 55% / y 58%
        ============================== -->
 
   <a
@@ -185,7 +187,6 @@ body {
     class="link"
     id="channel"
   ></a>
-
 
 </div>
 
@@ -197,18 +198,10 @@ body {
 DESKTOP HOTSPOTS
 ====================================================
 
+DESKTOP IS UNCHANGED.
+
 Coordinates are based on the actual writing
 in imantopia.jpg.
-
-x = horizontal position
-y = vertical position
-w = clickable width
-h = clickable height
-
-All values are percentages of the original image.
-
-The boxes are deliberately slightly larger than
-the handwriting so they are easy to click.
 ====================================================
 */
 
@@ -264,72 +257,69 @@ const desktopHotspots = {
 MOBILE HOTSPOTS
 ====================================================
 
-These coordinates are calibrated specifically to
-mobile-portrait.jpg.
+CALIBRATED TO THE SUPPLIED MOBILE-PORTRAIT IMAGE.
 
-Unlike the previous version, these are NOT six
-screen quadrants.
+These boxes are positioned over the ACTUAL
+handwritten words.
 
-Each hotspot is positioned over the actual
-handwritten word in the mobile photograph.
-
-Approximate handwritten positions in the supplied
-mobile photograph:
-
-portfolio  -> upper-left
-bio        -> upper-right
-manuscript -> middle-left
-blog       -> middle-right
-newsletter -> lower-left
-channel    -> lower-right
+They are NOT six screen quadrants.
 
 Coordinates are percentages of the ORIGINAL
-mobile image, not percentages of the screen.
+mobile image.
+
+The boxes intentionally stay around the writing
+rather than extending along the arrows.
 ====================================================
 */
 
 const mobileHotspots = {
 
+  /* "portfolio" */
   portfolio: {
-    x: 26.8,
-    y: 32.9,
-    w: 10.0,
-    h: 3.8
-  },
-
-  bio: {
-    x: 46.0,
-    y: 34.2,
-    w: 6.0,
-    h: 3.8
-  },
-
-  manuscript: {
-    x: 17.4,
-    y: 37.7,
-    w: 11.5,
-    h: 3.8
-  },
-
-  blog: {
-    x: 53.6,
-    y: 38.6,
-    w: 7.0,
-    h: 3.8
-  },
-
-  newsletter: {
-    x: 25.5,
-    y: 43.3,
+    x: 34.0,
+    y: 41.0,
     w: 11.0,
-    h: 3.8
+    h: 2.2
   },
 
+  /* "bio" */
+  bio: {
+    x: 58.0,
+    y: 42.1,
+    w: 5.5,
+    h: 2.2
+  },
+
+  /* "manuscript" */
+  manuscript: {
+    x: 23.0,
+    y: 46.3,
+    w: 11.0,
+    h: 2.2
+  },
+
+  /* "blog" */
+  blog: {
+    x: 67.5,
+    y: 47.7,
+    w: 6.0,
+    h: 2.2
+  },
+
+  /* "newsletter" */
+  newsletter: {
+    x: 29.0,
+    y: 54.2,
+    w: 10.5,
+    h: 2.2
+  },
+
+  /* "channel" */
   channel: {
-    x: 44.3,
-    y: 43.3,
-    w: 8.5,
-    h: 3.8
+    x: 57.0,
+    y: 54.2,
+    w: 10.0,
+    h: 2.2
   }
 
 };
@@ -349,24 +339,21 @@ function positionHotspots() {
   const wrapper =
     document.querySelector('.image-wrapper');
 
+
+  if (!image.complete || !image.naturalWidth) {
+    return;
+  }
+
+
   const isMobile =
     window.innerWidth <= 768 &&
     window.innerHeight > window.innerWidth;
 
 
   /*
-  -----------------------------------------------
+  ================================================
   MOBILE
-  -----------------------------------------------
-
-  The mobile photograph is a different image.
-
-  Calculate exactly where that image is displayed
-  after object-fit: cover and object-position: 35% 50%.
-
-  This keeps every clickable area attached to
-  the actual handwriting.
-  -----------------------------------------------
+  ================================================
   */
 
   if (isMobile) {
@@ -386,7 +373,7 @@ function positionHotspots() {
 
     /*
     -----------------------------------------------
-    Scale required for object-fit: cover
+    object-fit: cover
     -----------------------------------------------
     */
 
@@ -407,8 +394,6 @@ function positionHotspots() {
     /*
     -----------------------------------------------
     object-position: 35% 50%
-
-    Calculate the amount of crop.
     -----------------------------------------------
     */
 
@@ -428,7 +413,7 @@ function positionHotspots() {
 
     /*
     -----------------------------------------------
-    Convert ORIGINAL MOBILE IMAGE coordinates
+    Convert original mobile-image coordinates
     into actual screen coordinates.
     -----------------------------------------------
     */
@@ -440,6 +425,9 @@ function positionHotspots() {
 
       const link =
         document.getElementById(id);
+
+
+      if (!link) return;
 
 
       const originalX =
@@ -473,21 +461,19 @@ function positionHotspots() {
 
     });
 
+
     return;
 
   }
 
 
   /*
-  -----------------------------------------------
+  ================================================
   DESKTOP
+  ================================================
 
-  Calculate where the actual image is displayed
-  after object-fit: cover.
-
-  This keeps the hotspots attached to the
-  photograph even when the viewport ratio changes.
-  -----------------------------------------------
+  DESKTOP CODE BELOW IS KEPT AS-IS.
+  ================================================
   */
 
   const imageNaturalWidth =
@@ -504,7 +490,9 @@ function positionHotspots() {
 
 
   /*
+  -----------------------------------------------
   Scale required for object-fit: cover
+  -----------------------------------------------
   */
 
   const scale =
@@ -522,9 +510,9 @@ function positionHotspots() {
 
 
   /*
+  -----------------------------------------------
   object-position: 30% 50%
-
-  Calculate the amount of crop.
+  -----------------------------------------------
   */
 
   const horizontalOverflow =
@@ -555,6 +543,9 @@ function positionHotspots() {
 
     const link =
       document.getElementById(id);
+
+
+    if (!link) return;
 
 
     const originalX =
@@ -597,22 +588,51 @@ INITIALIZE
 ====================================================
 */
 
+function initializeHotspots() {
+
+  const image =
+    document.querySelector('.image-wrapper img');
+
+  if (image.complete && image.naturalWidth) {
+    positionHotspots();
+  }
+
+}
+
+
 window.addEventListener(
   'load',
-  positionHotspots
+  initializeHotspots
 );
+
 
 window.addEventListener(
   'resize',
   positionHotspots
 );
 
+
 window.addEventListener(
   'orientationchange',
   positionHotspots
 );
 
+
+/*
+Recalculate once the mobile image has actually
+loaded, including when the <picture> source
+changes.
+*/
+
+document
+  .querySelector('.image-wrapper img')
+  .addEventListener(
+    'load',
+    positionHotspots
+  );
+
 </script>
 
 </body>
+
 </html>

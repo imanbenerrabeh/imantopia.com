@@ -340,7 +340,18 @@ function positionHotspots() {
     document.querySelector('.image-wrapper');
 
 
+  /*
+  ------------------------------------------------
+  FIX: instead of silently giving up when the
+  image hasn't finished decoding yet (which left
+  the links at 0x0 / unclickable on slower mobile
+  connections), keep retrying on the next frame
+  until the image actually has real dimensions.
+  ------------------------------------------------
+  */
+
   if (!image.complete || !image.naturalWidth) {
+    requestAnimationFrame(positionHotspots);
     return;
   }
 
@@ -590,12 +601,7 @@ INITIALIZE
 
 function initializeHotspots() {
 
-  const image =
-    document.querySelector('.image-wrapper img');
-
-  if (image.complete && image.naturalWidth) {
-    positionHotspots();
-  }
+  positionHotspots();
 
 }
 
@@ -630,6 +636,41 @@ document
     'load',
     positionHotspots
   );
+
+
+/*
+------------------------------------------------
+FIX: if the image resource fails outright (bad
+network, wrong path, interrupted request), the
+'load' events above never fire and the links
+would otherwise stay unclickable forever with
+no explanation. Log it so it's diagnosable, and
+still attempt to position hotspots in case the
+browser recovers via its own fallback.
+------------------------------------------------
+*/
+
+document
+  .querySelector('.image-wrapper img')
+  .addEventListener(
+    'error',
+    () => {
+      console.warn(
+        'Imantopia: image failed to load — hotspots may be mispositioned.'
+      );
+      positionHotspots();
+    }
+  );
+
+
+/*
+Run once immediately too, in case the image is
+already cached and complete before 'load' fires
+(the retry loop above will simply re-run itself
+until dimensions are available if it isn't).
+*/
+
+positionHotspots();
 
 </script>
 

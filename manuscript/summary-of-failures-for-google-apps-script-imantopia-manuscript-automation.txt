@@ -1,0 +1,18 @@
+Your script, imantopia manuscript automation, has recently failed to finish  
+successfully. A summary of the failure(s) is shown below. To configure the  
+triggers for this script, or change your setting for receiving future  
+failure notifications, click here.
+
+
+Start Function Error Message Trigger End
+
+9/13/26 12:27:35 AM EDT processManuscriptEmails We're sorry, a server error  
+occurred. Please wait a bit and try again. time-based 9/13/26 12:28:35 AM  
+EDT
+
+
+Sincerely,
+Google Apps Script
+
+Need help? Visit the Google Apps Script documentation. Please do not reply  
+to this message. (c) 2026 Google

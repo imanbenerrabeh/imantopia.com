@@ -6,9 +6,8 @@ failure notifications, click here.
 
 Start Function Error Message Trigger End
 
-9/13/26 12:27:35 AM EDT processManuscriptEmails We're sorry, a server error  
-occurred. Please wait a bit and try again. time-based 9/13/26 12:28:35 AM  
-EDT
+9/15/26 3:22:35 PM EDT processManuscriptEmails We're sorry, a server error  
+occurred. Please wait a bit and try again. time-based 9/15/26 3:23:35 PM EDT
 
 
 Sincerely,

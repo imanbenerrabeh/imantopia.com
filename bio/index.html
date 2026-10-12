@@ -35,10 +35,56 @@ body {
   text-align:center;
 }
 
+.email-search {
+  display:flex;
+  width:100%;
+  max-width:360px;
+  margin:24px auto 0;
+  border:1px solid #000;
+  box-sizing:border-box;
+}
+
+.email-search input {
+  flex:1;
+  min-width:0;
+  padding:8px 10px;
+  border:0;
+  outline:none;
+  background:transparent;
+  color:#000;
+  font-family:inherit;
+  font-size:12pt;
+}
+
+.email-search input::placeholder {
+  color:#777;
+  opacity:1;
+}
+
+.email-search button {
+  padding:8px 10px;
+  border:0;
+  border-left:1px solid #000;
+  background:#fff;
+  color:#000;
+  font-family:inherit;
+  font-size:12pt;
+  cursor:pointer;
+}
+
+.email-search button:hover {
+  background:#000;
+  color:#fff;
+}
+
 .copyright {
   text-align:center;
   font-size:11pt;
   padding:20px 0;
+}
+
+@media (max-width:600px) {
+  body { padding:24px; }
 }
 </style>
 </head>
@@ -46,15 +92,33 @@ body {
 <body>
 
 <div class="container">
-
   <main class="bio">
-    hello world, my name is iman. i am 24 years old. i was born and raised in italy (south tyrol), but my family is from morocco. i live in sweet sweet canada. this is my corner of the internet! :v)
-  </main>
+    <div>
+      hello world! my name is iman. 26/08/2002.
+      i come from the italian dolomites and the moroccan atlas. i live in sweet sweet canada.
+      this is my corner of the internet! :v)
+    </div>
 
+    <form
+      class="email-search"
+      action="https://mail.google.com/mail/"
+      method="get"
+      onsubmit="event.preventDefault(); const message = document.getElementById('message').value.trim(); if(message) { window.location.href = 'mailto:mail@imantopia.com?subject=' + encodeURIComponent('hello from imantopia') + '&body=' + encodeURIComponent(message); }"
+    >
+      <input
+        type="text"
+        id="message"
+        placeholder="send me an email..."
+        aria-label="Your message"
+        autocomplete="off"
+      >
+      <button type="submit" aria-label="Send email">↗</button>
+    </form>
+  </main>
 </div>
 
 <div class="copyright">
-© 2025 Iman Ben Errabeh. All rights reserved.
+  © 2026 Iman Ben Errabeh. All rights reserved.
 </div>
 
 </body>
